@@ -12,14 +12,14 @@ public class P1 : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { //ดึง game Manager มาใช้
-        if (Input.GetKeyDown(KeyCode.Z))
+    { 
+        /*if (Input.GetKeyDown(KeyCode.Z))
         {
             gameManager.GravityUp();
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
             gameManager.GravityDown();
-        }
+        }*/
     }
 }

@@ -1,49 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [SerializeField] private float Gravity_ = -9.8f;
-    [SerializeField] private float _Gravity = 9.8f;
+    public float mass;
+    [SerializeField] private float Gravity_UP; // Decrease gravity
+    [SerializeField] private float Gravity_Down;  // Increase gravity
+    [SerializeField] private float GravityScale;
 
-     void Awake()
+    void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
     }
-     void FixedUpdate()
+
+    private void Start()
     {
         
-       
     }
-    //เปลี่ยนฟิสิกส์ให้เป็นขึ้น
-    public void GravityUp( )
-    {   float gravitys = _Gravity;
-        Physics2D.gravity = new Vector2 (0,gravitys );
 
-    }
-    //เปลี่ยนฟิสิกส์ให้เป็นลง
-    public void GravityDown (  )
+    public void GravityUp()
     {
-        float  gravitys = Gravity_;
-        Physics2D.gravity = new Vector2 (0,gravitys );
+        float gravitys = Gravity_UP;
+        Physics2D.gravity = new Vector2(0, gravitys);
     }
 
-
-
-
-
-
-
-
-
+    public void GravityDown()
+    {
+        float gravitys = Gravity_Down;
+        Physics2D.gravity = new Vector2(0, gravitys);
+    }
 }
