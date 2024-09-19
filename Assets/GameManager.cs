@@ -8,8 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public float mass;
-    [SerializeField] private float Gravity_UP; // Decrease gravity
-    [SerializeField] private float Gravity_Down;  // Increase gravity
+    [SerializeField] private float Gravity; // Decrease gravity
     [SerializeField] private float GravityScale;
 
     void Awake()
@@ -24,13 +23,19 @@ public class GameManager : MonoBehaviour
 
     public void GravityUp()
     {
-        float gravitys = Gravity_UP;
+        float gravitys = Gravity;
         Physics2D.gravity = new Vector2(0, gravitys);
+        Gravity -= Time.deltaTime * GravityScale;
     }
 
     public void GravityDown()
     {
-        float gravitys = Gravity_Down;
+        float gravitys = Gravity;
         Physics2D.gravity = new Vector2(0, gravitys);
+        Gravity += Time.deltaTime * GravityScale;
+        if(Gravity >= 0)
+        {
+            Gravity = 0.1f;
+        }
     }
 }

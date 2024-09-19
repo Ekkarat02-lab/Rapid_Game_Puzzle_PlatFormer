@@ -45,12 +45,12 @@ public class PlayerGravity : MonoBehaviour
         }
 
         // ปรับแรงโน้มถ่วงด้วยเมาส์
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             GameManager.Instance.GravityUp();
             Debug.Log(Physics2D.gravity);
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButton(1))
         {
             GameManager.Instance.GravityDown();
             Debug.Log(Physics2D.gravity);
