@@ -51,7 +51,7 @@ public class SinglePlayer : MonoBehaviour
         }
         
         //Map Controller
-        MapRotation.Instance.Controller();
+        MapRotation.Instance.Update();
     }
 
     void GetItem()

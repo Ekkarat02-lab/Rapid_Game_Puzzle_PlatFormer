@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //Map Controller
-        MapRotation.Instance.Controller();
+        MapRotation.Instance.Update();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

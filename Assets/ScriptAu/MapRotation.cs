@@ -1,20 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapRotation : MonoBehaviour
 {
+    public static MapRotation Instance;
     public float rotationSpeed = 100f; // Rotation speed
     private Rigidbody2D rb;
     private float totalRotation = 0f; // Total rotation applied
     private bool isRotating = false; // Is currently rotating
+
+    public void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    public void Update()
     {
         // Check for input to start rotation
         if (Input.GetKeyDown(KeyCode.E) && !isRotating)
