@@ -13,6 +13,9 @@ public class PlayerGravity : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero; // ค่าความเร็วปัจจุบันสำหรับ SmoothDamp
     public float smoothTime = 0.3f; // ระยะเวลาที่ใช้ในการเปลี่ยนค่าความเร็ว
 
+    private InteracableObject currentObj;
+    public LayerMask Interactable;
+
     void Update()
     {
         // SmoothDamp การเคลื่อนที่ในแกน X
@@ -41,7 +44,15 @@ public class PlayerGravity : MonoBehaviour
         // ใช้ไอเท็ม
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            UseItem();
+
+            if (currentObj != null)
+            {
+                currentObj.TriggerInteract();
+            }
+            else
+            { 
+                UseItem();
+            }
         }
 
         // ปรับแรงโน้มถ่วงด้วยเมาส์
@@ -68,5 +79,21 @@ public class PlayerGravity : MonoBehaviour
     void UseItem()
     {
         Debug.Log("Use Item");
+
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
+        {
+            currentObj = other.GetComponent<InteracableObject>(); // Get reference to the interactable object
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
+        {
+            currentObj = null; // Clear the reference when exiting the trigger
+        }
     }
 }

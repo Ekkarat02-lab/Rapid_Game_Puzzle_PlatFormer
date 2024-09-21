@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero; // ค่าความเร็วปัจจุบันสำหรับ SmoothDamp
     public float smoothTime = 0.3f; // ระยะเวลาที่ใช้ในการเปลี่ยนค่าความเร็ว
 
+    private InteracableObject currentObj;
+    public LayerMask Interactable;
     void Update()
     {
         // SmoothDamp การเคลื่อนที่ในแกน X
@@ -41,7 +43,15 @@ public class PlayerMovement : MonoBehaviour
         // UseItem
         if (Input.GetKeyDown(KeyCode.S))
         {
-            GetItem();
+            
+            if (currentObj != null)
+            {
+                currentObj.TriggerInteract();
+            }
+            else
+            {
+                GetItem();
+            }
         }
         
         //Map Controller
@@ -59,5 +69,21 @@ public class PlayerMovement : MonoBehaviour
     void GetItem()
     {
         Debug.Log("Use and Get Item");
+       
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
+        {
+            currentObj = other.GetComponent<InteracableObject>(); // Get reference to the interactable object
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
+        {
+            currentObj = null; // Clear the reference when exiting the trigger
+        }
     }
 }
