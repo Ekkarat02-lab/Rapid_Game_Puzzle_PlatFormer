@@ -18,8 +18,7 @@ public class PauseMenu : MonoBehaviour
             instance = this;
         }
     }
-  
-
+    
     // Update is called once per frame
     void Update()
     {

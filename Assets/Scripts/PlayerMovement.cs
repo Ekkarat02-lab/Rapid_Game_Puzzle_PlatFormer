@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -15,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     private InteracableObject currentObj;
     public LayerMask Interactable;
+    
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    
     void Update()
     {
         // SmoothDamp การเคลื่อนที่ในแกน X
@@ -63,6 +66,9 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+        }else if (collision.gameObject.CompareTag("KillPlayer"))
+        {
+            Destroy(gameObject);
         }
     }
     

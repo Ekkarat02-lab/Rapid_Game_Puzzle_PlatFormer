@@ -16,6 +16,11 @@ public class PlayerGravity : MonoBehaviour
     private InteracableObject currentObj;
     public LayerMask Interactable;
 
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    
     void Update()
     {
         // SmoothDamp การเคลื่อนที่ในแกน X
@@ -73,6 +78,9 @@ public class PlayerGravity : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+        }else if (collision.gameObject.CompareTag("KillPlayer"))
+        {
+            Destroy(gameObject);
         }
     }
 

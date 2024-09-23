@@ -7,8 +7,7 @@ public class TimeScript : MonoBehaviour
 {
      [SerializeField] TextMeshProUGUI timerText;
      [SerializeField]  public  float elapsedTime;
-
-
+     
     void Update()
     {
         elapsedTime += Time.deltaTime;
@@ -17,4 +16,3 @@ public class TimeScript : MonoBehaviour
         timerText.text = string.Format("{0}:{1:00}", minutes, seconds);
     }
 }
-
