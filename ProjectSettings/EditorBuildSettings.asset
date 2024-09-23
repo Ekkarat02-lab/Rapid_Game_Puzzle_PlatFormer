@@ -6,12 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SceneMapRotate.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/Mainmenu.unity
     guid: 1a51be1c63a390248b62ea7ea347c0f0
   - enabled: 1
     path: Assets/Scenes/PlayGame.unity
-    guid: 3dd36ada6b948134ba8604edf2b72732
+    guid: 898af37836b12f743a36894795382bde
   m_configObjects: {}
