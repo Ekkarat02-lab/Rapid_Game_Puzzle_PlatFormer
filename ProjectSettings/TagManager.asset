@@ -8,6 +8,8 @@ TagManager:
   - KillPlayer
   - RedKey
   - BlueKey
+  - Door
+  - KeyItem
   layers:
   - Default
   - TransparentFX

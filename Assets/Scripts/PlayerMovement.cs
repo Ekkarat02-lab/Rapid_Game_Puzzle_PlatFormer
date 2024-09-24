@@ -1,95 +1,40 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : SharedPlayerController
 {
-    public float moveSpeed = 5f;
-    public float jumpForce = 7f;
-    public Rigidbody2D rb;
-    private bool isGrounded;
-
-    private Vector2 currentVelocity = Vector2.zero; // ค่าความเร็วปัจจุบันสำหรับ SmoothDamp
-    public float smoothTime = 0.3f; // ระยะเวลาที่ใช้ในการเปลี่ยนค่าความเร็ว
-
-    private InteracableObject currentObj;
-    public LayerMask Interactable;
-    
-    public void Start()
+    void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); // รับส่วนประกอบ Rigidbody2D
     }
-    
+
     void Update()
     {
-        // SmoothDamp การเคลื่อนที่ในแกน X
-        float targetVelocityX = 0f;
-        
+        float horizontalInput = 0f; // กำหนดค่าการเคลื่อนที่ในแนวนอน
+
+        // รับค่าการกดปุ่ม A หรือ D
         if (Input.GetKey(KeyCode.A))
         {
-            targetVelocityX = -moveSpeed;
+            horizontalInput = -1f; // เคลื่อนที่ไปทางซ้าย
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            targetVelocityX = moveSpeed;
+            horizontalInput = 1f; // เคลื่อนที่ไปทางขวา
         }
 
-        // ใช้ SmoothDamp เพื่อให้การเปลี่ยนแปลงความเร็วราบรื่น
-        float newVelocityX = Mathf.SmoothDamp(rb.velocity.x, targetVelocityX, ref currentVelocity.x, smoothTime);
-        rb.velocity = new Vector2(newVelocityX, rb.velocity.y);
+        Move(horizontalInput); // เรียกใช้ฟังก์ชันการเคลื่อนที่
 
-        // การกระโดด
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        // ตรวจสอบการกดปุ่มกระโดดและใช้ไอเทม
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isGrounded = false;
+            Jump();
         }
-        
-        // UseItem
+
         if (Input.GetKeyDown(KeyCode.S))
         {
-            
-            if (currentObj != null)
-            {
-                currentObj.TriggerInteract();
-            }
-            else
-            {
-                GetItem();
-            }
+
         }
-        
-        //Map Controller
+
+        // เรียกใช้การหมุนแผนที่
         MapRotation.Instance.Update();
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }else if (collision.gameObject.CompareTag("KillPlayer"))
-        {
-            Destroy(gameObject);
-        }
-    }
-    
-    void GetItem()
-    {
-        Debug.Log("Use and Get Item");
-       
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
-        {
-            currentObj = other.GetComponent<InteracableObject>(); // Get reference to the interactable object
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if ((Interactable & (1 << other.gameObject.layer)) != 0) // Check if the layer matches
-        {
-            currentObj = null; // Clear the reference when exiting the trigger
-        }
     }
 }
