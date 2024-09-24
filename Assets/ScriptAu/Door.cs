@@ -19,7 +19,7 @@ public class Door : MonoBehaviour
             CloseDoor();
         }
     }
-    private bool areAllPlatesOccupied()
+    private bool areAllPlatesOccupied() //pressureplate is pressed.
     {
         foreach(pressurePlate plate in pressurePlates)
         {

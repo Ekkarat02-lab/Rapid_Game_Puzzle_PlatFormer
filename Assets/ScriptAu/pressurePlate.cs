@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class pressurePlate : MonoBehaviour
 {
-    public string expectedTag = "Key";
-    private bool isOccupied = false;
+    public string expectedTag = "Key"; //tag that is used for pressure plate
+    private bool isOccupied = false; // 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) //check if object is in and correct tag
     {
         if(other.CompareTag(expectedTag))
         {
@@ -15,7 +15,7 @@ public class pressurePlate : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)//Check if object is out
     {
         if(other.CompareTag(expectedTag))
         {
