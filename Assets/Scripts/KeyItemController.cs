@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class KeyItemController : MonoBehaviour
 {
+    public static KeyItemController Instance;
     // ตัวแปรเพื่อเก็บสถานะของ item key
     private bool hasKey = false;
     private bool nearKeyItem = false; // ใช้เพื่อตรวจสอบว่าอยู่ใกล้ key item หรือไม่
@@ -9,10 +10,32 @@ public class KeyItemController : MonoBehaviour
     private GameObject keyItemObject; // ตัวแปรเพื่อเก็บ reference ของ KeyItem
     private GameObject doorObject; // ตัวแปรเพื่อเก็บ reference ของ Door
 
-    void Update()
+    public void Awake()
+    {
+        Instance = this;
+    }
+
+    public void Update()
     {
         // ตรวจสอบการกดปุ่ม S เพื่อเก็บ item key
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (nearKeyItem && !hasKey)
+            {
+                // เก็บ item key
+                hasKey = true;
+                Debug.Log("You have picked up the key!");
+
+                // ลบ item key จาก scene
+                Destroy(keyItemObject);
+            }
+            else if (nearDoor && hasKey)
+            {
+                // ใช้ item key เพื่อเปิดประตู
+                UnlockDoor();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) 
         {
             if (nearKeyItem && !hasKey)
             {

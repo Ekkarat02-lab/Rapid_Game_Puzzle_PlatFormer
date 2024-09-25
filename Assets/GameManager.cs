@@ -29,15 +29,15 @@ public class GameManager : MonoBehaviour
 
     private int totalDestroyCount = 0;  // Combined count of prefab1 and prefab2 destroyed
     private int playerMode;  // Mode to determine if it's StartWithSwitchMode or StartWithPlayer1AndPlayer2
-    
+
     void Awake()
     {
         Instance = this; // ตั้งค่า Instance ให้เป็นตัวเอง
     }
-    
+
     void Start()
     {
-        playerMode = MenuController.playerMode;  // Get the player mode from MenuController
+        int playerMode = MenuController.playerMode;  // Get the player mode from MenuController
 
         if (playerMode == 1) // กรณี StartWithPlayer1AndPlayer2
         {
@@ -78,19 +78,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // Continuously update the arrow position to follow the current controlled player if in switch mode
-        if (playerMode == 2)
+        if (MenuController.playerMode == 2)
         {
+            // Continuously update the arrow position to follow the current controlled player
             UpdateArrowUIPosition();
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SwitchPlayerControl();  // Switch control between Player 1 and Player 2
             }
-        }
 
-        // Check if either prefab is destroyed
-        CheckAndRespawnIfNeeded();
+            // Check if either prefab is destroyed
+            CheckAndRespawnIfNeeded();
+        }
     }
 
     // Method to remove PlayerMovement.cs and PlayerGravity.cs
@@ -174,20 +174,18 @@ public class GameManager : MonoBehaviour
             totalDestroyCount++;
             UpdateDestroyCountUI();
 
-            // Respawn Player 1 at the spawn point
+            // Respawn Player 1 at the spawn point and switch control to Player 2
             player1Instance = Instantiate(playerPrefab1, spawnPoints[0].position, Quaternion.identity);
+            RemoveUnnecessaryScripts(player1Instance);
+            player1SinglePlayerScript = player1Instance.AddComponent<SinglePlayer>();
+            player1SinglePlayerScript.enabled = false;  // Disable it initially
 
-            if (playerMode == 2) // กรณี StartWithSwitchMode
-            {
-                RemoveUnnecessaryScripts(player1Instance);
-                player1SinglePlayerScript = player1Instance.AddComponent<SinglePlayer>();
-                player1SinglePlayerScript.enabled = false;  // Disable it initially
-            }
+            // Switch control to Player 2
+            player2SinglePlayerScript.enabled = true;
+            currentControlledPlayer = player2Instance;
 
-            if (currentControlledPlayer == player1Instance && playerMode == 2)
-            {
-                SwitchPlayerControl();  // Switch to Player 2 when Player 1 is respawned
-            }
+            // Show the arrow for Player 2
+            StartCoroutine(ShowArrowForLimitedTime());
         }
 
         if (player2Instance == null)
@@ -196,20 +194,18 @@ public class GameManager : MonoBehaviour
             totalDestroyCount++;
             UpdateDestroyCountUI();
 
-            // Respawn Player 2 at the spawn point
+            // Respawn Player 2 at the spawn point and switch control to Player 1
             player2Instance = Instantiate(playerPrefab2, spawnPoints[1].position, Quaternion.identity);
+            RemoveUnnecessaryScripts(player2Instance);
+            player2SinglePlayerScript = player2Instance.AddComponent<SinglePlayer>();
+            player2SinglePlayerScript.enabled = false;  // Disable it initially
 
-            if (playerMode == 2) // กรณี StartWithSwitchMode
-            {
-                RemoveUnnecessaryScripts(player2Instance);
-                player2SinglePlayerScript = player2Instance.AddComponent<SinglePlayer>();
-                player2SinglePlayerScript.enabled = false;  // Disable it initially
-            }
+            // Switch control to Player 1
+            player1SinglePlayerScript.enabled = true;
+            currentControlledPlayer = player1Instance;
 
-            if (currentControlledPlayer == player2Instance && playerMode == 2)
-            {
-                SwitchPlayerControl();  // Switch to Player 1 when Player 2 is respawned
-            }
+            // Show the arrow for Player 1
+            StartCoroutine(ShowArrowForLimitedTime());
         }
     }
 

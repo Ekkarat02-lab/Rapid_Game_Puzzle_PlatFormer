@@ -31,7 +31,8 @@ public class PlayerGravity : SharedPlayerController
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            
+            KeyItemController.Instance.Update();
+            Debug.Log("Get And Set Item");
         }
 
         // ปรับแรงโน้มถ่วงด้วยการกดปุ่มเมาส์

@@ -31,7 +31,8 @@ public class PlayerMovement : SharedPlayerController
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-
+            KeyItemController.Instance.Update();
+            Debug.Log("Get And Set Item");
         }
 
         // เรียกใช้การหมุนแผนที่

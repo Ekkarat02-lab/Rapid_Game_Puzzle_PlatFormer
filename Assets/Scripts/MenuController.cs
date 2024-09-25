@@ -22,7 +22,7 @@ public class MenuController : MonoBehaviour
     // Function to load the PlayGame scene
     private void LoadPlayGameScene()
     {
-        SceneManager.LoadScene("PlayGame");
+        SceneManager.LoadScene("level 1");
     }
     
     public void QuitGame()

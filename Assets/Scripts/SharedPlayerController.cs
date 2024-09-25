@@ -11,10 +11,12 @@ public class SharedPlayerController : MonoBehaviour
     protected Vector2 currentVelocity = Vector2.zero;
 
     private bool facingRight = true;
+    
+    public Animator animator;
 
-    void Update()
+    public void Start()
     {
-        // ฟังก์ชันเคลื่อนที่ที่ถูกเรียกทุกเฟรม
+        animator = GetComponent<Animator>();
     }
 
     public void Move(float horizontalInput)

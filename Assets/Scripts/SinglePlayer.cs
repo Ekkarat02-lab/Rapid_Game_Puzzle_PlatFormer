@@ -31,7 +31,8 @@ public class SinglePlayer : SharedPlayerController
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-
+            KeyItemController.Instance.Update();
+            Debug.Log("Get And Set Item");
         }
         
         // ปรับแรงโน้มถ่วงด้วยการกดปุ่มเมาส์
