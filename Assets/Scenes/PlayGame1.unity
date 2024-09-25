@@ -459,7 +459,7 @@ Rigidbody2D:
   m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.13496098
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -570,7 +570,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -946,6 +946,7 @@ MonoBehaviour:
   - {fileID: 242147292}
   - {fileID: 1112668000}
   arrowUI: {fileID: 1765100180}
+  destroyCountText: {fileID: 0}
 --- !u!4 &995830530
 Transform:
   m_ObjectHideFlags: 0

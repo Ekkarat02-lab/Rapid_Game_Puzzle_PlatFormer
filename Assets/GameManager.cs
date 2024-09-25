@@ -10,20 +10,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float Gravity; // ค่าแรงโน้มถ่วงเริ่มต้น
     [SerializeField] private float GravityScale; // สเกลสำหรับการปรับแรงโน้มถ่วง
 
-    public GameObject playerPrefab1;  // วัตถุ prefab ของ Player 1
-    public GameObject playerPrefab2;  // วัตถุ prefab ของ Player 2
+    public GameObject playerPrefab1;  // Assign Player 1 prefab
+    public GameObject playerPrefab2;  // Assign Player 2 prefab
 
-    public Transform[] spawnPoints;  // อาร์เรย์ของจุดเกิดสำหรับผู้เล่น
+    public Transform[] spawnPoints;  // Array of spawn points for players
 
-    public RectTransform arrowUI;  // UI ลูกศรเพื่อแสดงผู้เล่นที่ควบคุมอยู่
+    public RectTransform arrowUI;  // UI arrow to show the currently controlled player
+    public Text destroyCountText;  // UI Text to show the combined destroy count of both prefabs
 
-    private GameObject player1Instance; // อินสแตนซ์ของ Player 1
-    private GameObject player2Instance; // อินสแตนซ์ของ Player 2
+    private GameObject player1Instance;
+    private GameObject player2Instance;
 
-    private SinglePlayer player1SinglePlayerScript; // สคริปต์ SinglePlayer ของ Player 1
-    private SinglePlayer player2SinglePlayerScript; // สคริปต์ SinglePlayer ของ Player 2
+    private SinglePlayer player1SinglePlayerScript;
+    private SinglePlayer player2SinglePlayerScript;
 
-    private GameObject currentControlledPlayer;  // เพื่อติดตามผู้เล่นที่ควบคุมอยู่ในขณะนั้น
+    private GameObject currentControlledPlayer;  // To track which player is currently controlled
+    private bool isArrowVisible = true;  // Track the visibility of the arrow
+
+    private int totalDestroyCount = 0;  // Combined count of prefab1 and prefab2 destroyed
+    private int playerMode;  // Mode to determine if it's StartWithSwitchMode or StartWithPlayer1AndPlayer2
     
     void Awake()
     {
@@ -32,17 +37,19 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        int playerMode = MenuController.playerMode;  // รับโหมดผู้เล่นจาก MenuController
+        playerMode = MenuController.playerMode;  // Get the player mode from MenuController
 
         if (playerMode == 1) // กรณี StartWithPlayer1AndPlayer2
         {
-            // สร้าง Player 1 และ Player 2 โดยไม่ต้องสลับสคริปต์
+            // Spawn both Player 1 and Player 2 without script switching and without SinglePlayer.cs
             player1Instance = Instantiate(playerPrefab1, spawnPoints[0].position, Quaternion.identity);
             player2Instance = Instantiate(playerPrefab2, spawnPoints[1].position, Quaternion.identity);
+
+            // ไม่ต้องเพิ่มสคริปต์ SinglePlayer.cs
         }
         else if (playerMode == 2) // กรณี StartWithSwitchMode
         {
-            // สร้าง Player 1 และ Player 2
+            // StartWithSwitchMode: spawn both Player 1 and Player 2
             player1Instance = Instantiate(playerPrefab1, spawnPoints[0].position, Quaternion.identity);
             player2Instance = Instantiate(playerPrefab2, spawnPoints[1].position, Quaternion.identity);
 
@@ -50,37 +57,43 @@ public class GameManager : MonoBehaviour
             RemoveUnnecessaryScripts(player1Instance);
             RemoveUnnecessaryScripts(player2Instance);
 
-            // เพิ่มสคริปต์ SinglePlayer ให้กับทั้ง Player 1 และ Player 2
+            // Add SinglePlayer script to both Player 1 and Player 2
             player1SinglePlayerScript = player1Instance.AddComponent<SinglePlayer>();
             player2SinglePlayerScript = player2Instance.AddComponent<SinglePlayer>();
 
-            // ปิดการใช้งาน SinglePlayer script ใน Player 2, เปิดใช้งานใน Player 1
+            // Disable SinglePlayer script in Player 2, enable in Player 1
             player1SinglePlayerScript.enabled = true;
             player2SinglePlayerScript.enabled = false;
 
-            // เริ่มต้นด้วยการควบคุม Player 1
+            // Start by controlling Player 1
             currentControlledPlayer = player1Instance;
 
-            // ปรับตำแหน่ง UI ลูกศรให้ชี้ไปที่ผู้เล่นที่ควบคุมอยู่ (Player 1)
-            UpdateArrowUIPosition();
+            // Show the arrow UI for 2 seconds and then hide it
+            StartCoroutine(ShowArrowForLimitedTime());
         }
+
+        // Update UI Text with initial counts
+        UpdateDestroyCountUI();
     }
 
     void Update()
     {
-        if (MenuController.playerMode == 2 && Input.GetKeyDown(KeyCode.Space))
-        {
-            SwitchPlayerControl();  // สลับการควบคุมระหว่าง Player 1 และ Player 2
-        }
-
-        // ปรับตำแหน่งลูกศร UI หากอยู่ในโหมดสลับ
-        if (MenuController.playerMode == 2)
+        // Continuously update the arrow position to follow the current controlled player if in switch mode
+        if (playerMode == 2)
         {
             UpdateArrowUIPosition();
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SwitchPlayerControl();  // Switch control between Player 1 and Player 2
+            }
         }
+
+        // Check if either prefab is destroyed
+        CheckAndRespawnIfNeeded();
     }
 
-    // ฟังก์ชันสำหรับลบ PlayerMovement.cs และ PlayerGravity.cs
+    // Method to remove PlayerMovement.cs and PlayerGravity.cs
     void RemoveUnnecessaryScripts(GameObject player)
     {
         var movementScript = player.GetComponent<PlayerMovement>();
@@ -88,12 +101,12 @@ public class GameManager : MonoBehaviour
 
         if (movementScript != null)
         {
-            Destroy(movementScript);  // ลบสคริปต์ PlayerMovement
+            Destroy(movementScript);  // Remove PlayerMovement script
         }
 
         if (gravityScript != null)
         {
-            Destroy(gravityScript);  // ลบสคริปต์ PlayerGravity
+            Destroy(gravityScript);  // Remove PlayerGravity script
         }
     }
 
@@ -101,33 +114,109 @@ public class GameManager : MonoBehaviour
     {
         if (currentControlledPlayer == player1Instance)
         {
-            // สลับการควบคุมไปที่ Player 2
-            player1SinglePlayerScript.enabled = false;  // ปิดการใช้งานสคริปต์ SinglePlayer ใน Player 1
-            player2SinglePlayerScript.enabled = true;   // เปิดการใช้งานสคริปต์ SinglePlayer ใน Player 2
+            // Switch control to Player 2
+            player1SinglePlayerScript.enabled = false;  // Disable SinglePlayer script in Player 1
+            player2SinglePlayerScript.enabled = true;   // Enable SinglePlayer script in Player 2
 
-            currentControlledPlayer = player2Instance;  // ตั้งค่าการควบคุมให้เป็น Player 2
+            currentControlledPlayer = player2Instance;  // Set current control to Player 2
         }
         else
         {
-            // สลับการควบคุมไปที่ Player 1
-            player2SinglePlayerScript.enabled = false;  // ปิดการใช้งานสคริปต์ SinglePlayer ใน Player 2
-            player1SinglePlayerScript.enabled = true;   // เปิดการใช้งานสคริปต์ SinglePlayer ใน Player 1
+            // Switch control to Player 1
+            player2SinglePlayerScript.enabled = false;  // Disable SinglePlayer script in Player 2
+            player1SinglePlayerScript.enabled = true;   // Enable SinglePlayer script in Player 1
 
-            currentControlledPlayer = player1Instance;  // ตั้งค่าการควบคุมให้เป็น Player 1
+            currentControlledPlayer = player1Instance;  // Set current control to Player 1
         }
+
+        // Show the arrow UI for 2 seconds after switching control
+        StartCoroutine(ShowArrowForLimitedTime());
     }
 
-    // ฟังก์ชันสำหรับปรับตำแหน่ง UI ลูกศรให้ชี้ไปที่ผู้เล่นที่ควบคุมอยู่
+    // Coroutine to show the arrow for 2 seconds and then hide it (but keep it following the player)
+    IEnumerator ShowArrowForLimitedTime()
+    {
+        // Make the arrow visible and position it at the current controlled player
+        isArrowVisible = true;
+        arrowUI.gameObject.SetActive(true);
+        UpdateArrowUIPosition();
+
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(2f);
+
+        // Hide the arrow UI, but continue tracking its position
+        isArrowVisible = false;
+        arrowUI.gameObject.SetActive(false);
+    }
+
+    // Method to update the arrow UI position to point to the currently controlled player
     void UpdateArrowUIPosition()
     {
         if (currentControlledPlayer != null)
         {
-            // แปลงตำแหน่งโลกของผู้เล่นปัจจุบันเป็นตำแหน่งบนหน้าจอ
+            // Convert the world position of the current player to the screen position
             Vector3 screenPos = Camera.main.WorldToScreenPoint(currentControlledPlayer.transform.position);
 
-            // ปรับตำแหน่ง UI ลูกศรให้ตรงกับตำแหน่งผู้เล่น
+            // Update the UI arrow position to match the player's screen position
             arrowUI.position = screenPos;
+
+            // Only show the arrow if it is meant to be visible
+            arrowUI.gameObject.SetActive(isArrowVisible);
         }
+    }
+
+    // Method to check if a prefab is destroyed and respawn it if needed
+    void CheckAndRespawnIfNeeded()
+    {
+        if (player1Instance == null)
+        {
+            // Increase the total destroy count
+            totalDestroyCount++;
+            UpdateDestroyCountUI();
+
+            // Respawn Player 1 at the spawn point
+            player1Instance = Instantiate(playerPrefab1, spawnPoints[0].position, Quaternion.identity);
+
+            if (playerMode == 2) // กรณี StartWithSwitchMode
+            {
+                RemoveUnnecessaryScripts(player1Instance);
+                player1SinglePlayerScript = player1Instance.AddComponent<SinglePlayer>();
+                player1SinglePlayerScript.enabled = false;  // Disable it initially
+            }
+
+            if (currentControlledPlayer == player1Instance && playerMode == 2)
+            {
+                SwitchPlayerControl();  // Switch to Player 2 when Player 1 is respawned
+            }
+        }
+
+        if (player2Instance == null)
+        {
+            // Increase the total destroy count
+            totalDestroyCount++;
+            UpdateDestroyCountUI();
+
+            // Respawn Player 2 at the spawn point
+            player2Instance = Instantiate(playerPrefab2, spawnPoints[1].position, Quaternion.identity);
+
+            if (playerMode == 2) // กรณี StartWithSwitchMode
+            {
+                RemoveUnnecessaryScripts(player2Instance);
+                player2SinglePlayerScript = player2Instance.AddComponent<SinglePlayer>();
+                player2SinglePlayerScript.enabled = false;  // Disable it initially
+            }
+
+            if (currentControlledPlayer == player2Instance && playerMode == 2)
+            {
+                SwitchPlayerControl();  // Switch to Player 1 when Player 2 is respawned
+            }
+        }
+    }
+
+    // Method to update UI Text with the combined destroy count
+    void UpdateDestroyCountUI()
+    {
+        destroyCountText.text = "Dead : " + totalDestroyCount;
     }
 
     public void GravityUp()

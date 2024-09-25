@@ -57,14 +57,11 @@ public class SharedPlayerController : MonoBehaviour
     }
 
     // ฟังก์ชันเช็คว่า Player ชนกับพื้นดินที่มีแท็ก "Ground"
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-        }else if(collision.gameObject.CompareTag("KillPlayer"))
-        {
-            Destroy(gameObject);
         }
     }
 
