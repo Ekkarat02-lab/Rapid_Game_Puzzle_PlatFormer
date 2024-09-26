@@ -3,12 +3,13 @@ using UnityEngine;
 public class KeyItemController : MonoBehaviour
 {
     public static KeyItemController Instance;
-    // ตัวแปรเพื่อเก็บสถานะของ item key
     private bool hasKey = false;
-    private bool nearKeyItem = false; // ใช้เพื่อตรวจสอบว่าอยู่ใกล้ key item หรือไม่
-    private bool nearDoor = false; // ใช้เพื่อตรวจสอบว่าอยู่ใกล้ประตูหรือไม่
-    private GameObject keyItemObject; // ตัวแปรเพื่อเก็บ reference ของ KeyItem
-    private GameObject doorObject; // ตัวแปรเพื่อเก็บ reference ของ Door
+    private bool nearKeyItem = false;
+    private bool nearDoor = false;
+    private bool nearPlatform = false; // เพิ่มตัวแปรสำหรับตรวจสอบแท่น
+    private GameObject keyItemObject;
+    private GameObject doorObject;
+    private GameObject platformObject; // เก็บ reference ของ Platform
 
     public void Awake()
     {
@@ -17,8 +18,8 @@ public class KeyItemController : MonoBehaviour
 
     public void Update()
     {
-        // ตรวจสอบการกดปุ่ม S เพื่อเก็บ item key
-        if (Input.GetKeyDown(KeyCode.S))
+        // ตรวจสอบการกดปุ่ม S หรือ DownArrow เพื่อเก็บ item หรือใช้ item
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (nearKeyItem && !hasKey)
             {
@@ -34,65 +35,92 @@ public class KeyItemController : MonoBehaviour
                 // ใช้ item key เพื่อเปิดประตู
                 UnlockDoor();
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) 
-        {
-            if (nearKeyItem && !hasKey)
+            else if (nearPlatform && hasKey)
             {
-                // เก็บ item key
-                hasKey = true;
-                Debug.Log("You have picked up the key!");
-
-                // ลบ item key จาก scene
-                Destroy(keyItemObject);
-            }
-            else if (nearDoor && hasKey)
-            {
-                // ใช้ item key เพื่อเปิดประตู
-                UnlockDoor();
+                // วาง item บนแท่นและเปิดประตู
+                PlaceItemOnPlatform();
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // ตรวจสอบว่าเข้ามาใกล้ key item หรือ door
+        // ตรวจสอบว่าเข้ามาใกล้ key item, door หรือ platform
         if (collision.CompareTag("KeyItem"))
         {
+            Debug.Log("KeyItem detected.");
             nearKeyItem = true;
-            keyItemObject = collision.gameObject; // เก็บ reference ของ KeyItem
+            keyItemObject = collision.gameObject;
         }
         else if (collision.CompareTag("Door"))
         {
+            Debug.Log("Door detected.");
             nearDoor = true;
-            doorObject = collision.gameObject; // เก็บ reference ของ Door
+            doorObject = collision.gameObject;
+        }
+        else if (collision.CompareTag("Platform"))
+        {
+            Debug.Log("Platform detected.");
+            nearPlatform = true;
+            platformObject = collision.gameObject; // เก็บ reference ของ Platform
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // ตรวจสอบว่าออกจากการใกล้ key item หรือ door
+        // ตรวจสอบว่าออกจากการใกล้ key item, door หรือ platform
         if (collision.CompareTag("KeyItem"))
         {
             nearKeyItem = false;
-            keyItemObject = null; // รีเซ็ต reference
+            keyItemObject = null;
         }
         else if (collision.CompareTag("Door"))
         {
             nearDoor = false;
-            doorObject = null; // รีเซ็ต reference
+            doorObject = null;
+        }
+        else if (collision.CompareTag("Platform"))
+        {
+            nearPlatform = false;
+            platformObject = null;
         }
     }
 
     private void UnlockDoor()
     {
-        // ทำการปลดล็อกประตูที่นี่
         Debug.Log("The door has been unlocked!");
-        
-        // ลบ item key หลังจากใช้งาน
         hasKey = false;
-        
+
         // ลบประตูจาก scene
-        Destroy(doorObject); // ใช้ reference ที่เก็บไว้
+        if (doorObject != null)
+        {
+            Debug.Log("Destroying the door.");
+            Destroy(doorObject);
+        }
+        else
+        {
+            Debug.Log("No door found to destroy.");
+        }
+    }
+
+    private void PlaceItemOnPlatform()
+    {
+        Debug.Log("You placed the key on the platform!");
+        hasKey = false;
+
+        // ลบประตูทั้งหมดที่มี Tag "Door"
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        if (doors.Length > 0)
+        {
+            foreach (GameObject door in doors)
+            {
+                Debug.Log("Destroying door: " + door.name);
+                Destroy(door);
+            }
+        }
+        else
+        {
+            Debug.Log("No doors found to destroy.");
+        }
     }
 }

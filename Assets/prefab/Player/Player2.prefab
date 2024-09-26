@@ -198,6 +198,7 @@ MonoBehaviour:
   jumpForce: 7
   rb: {fileID: 1224222426903877061}
   smoothTime: 0.3
+  animator: {fileID: 9222932293396578365}
 --- !u!114 &1287346059389769410
 MonoBehaviour:
   m_ObjectHideFlags: 0
