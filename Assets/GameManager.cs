@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public Transform[] spawnPoints;  // Array of spawn points for players
 
     public RectTransform arrowUI;  // UI arrow to show the currently controlled player
-    public Text destroyCountText;  // UI Text to show the combined destroy count of both prefabs
+      
 
     private GameObject player1Instance;
     private GameObject player2Instance;
@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject currentControlledPlayer;  // To track which player is currently controlled
     private bool isArrowVisible = true;  // Track the visibility of the arrow
-
-    private int totalDestroyCount = 0;  // Combined count of prefab1 and prefab2 destroyed
+ 
     private int playerMode;  // Mode to determine if it's StartWithSwitchMode or StartWithPlayer1AndPlayer2
 
     void Awake()
@@ -73,7 +72,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Update UI Text with initial counts
-        UpdateDestroyCountUI();
+        
     }
 
     void Update()
@@ -170,9 +169,8 @@ public class GameManager : MonoBehaviour
     {
         if (player1Instance == null)
         {
-            // Increase the total destroy count
-            totalDestroyCount++;
-            UpdateDestroyCountUI();
+                      
+            
 
             // Respawn Player 1 at the spawn point and switch control to Player 2
             player1Instance = Instantiate(playerPrefab1, spawnPoints[0].position, Quaternion.identity);
@@ -190,9 +188,7 @@ public class GameManager : MonoBehaviour
 
         if (player2Instance == null)
         {
-            // Increase the total destroy count
-            totalDestroyCount++;
-            UpdateDestroyCountUI();
+                     
 
             // Respawn Player 2 at the spawn point and switch control to Player 1
             player2Instance = Instantiate(playerPrefab2, spawnPoints[1].position, Quaternion.identity);
@@ -209,11 +205,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Method to update UI Text with the combined destroy count
-    void UpdateDestroyCountUI()
-    {
-        destroyCountText.text = "Dead : " + totalDestroyCount;
-    }
+   
+    
 
     public void GravityUp()
     {
