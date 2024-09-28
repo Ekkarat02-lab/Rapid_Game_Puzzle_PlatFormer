@@ -11,7 +11,7 @@ public class SharedPlayerController : MonoBehaviour
     protected Vector2 currentVelocity = Vector2.zero;
 
     private bool facingRight = true;
-    
+
     public Animator animator;
 
     public void Start()
@@ -24,6 +24,9 @@ public class SharedPlayerController : MonoBehaviour
         float targetVelocityX = horizontalInput * moveSpeed;
         float newVelocityX = Mathf.SmoothDamp(rb.velocity.x, targetVelocityX, ref currentVelocity.x, smoothTime);
         rb.velocity = new Vector2(newVelocityX, rb.velocity.y);
+
+        // ตรวจจับความเร็วในแกน X เพื่อเปลี่ยนค่าแอนิเมชัน
+        animator.SetFloat("Speed", Mathf.Abs(newVelocityX));
 
         FlipCharacter(horizontalInput);
     }
@@ -55,6 +58,7 @@ public class SharedPlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+            animator.SetBool("IsJumping", true); // เล่นแอนิเมชันกระโดด
         }
     }
 
@@ -64,6 +68,7 @@ public class SharedPlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("IsJumping", false); // หยุดแอนิเมชันกระโดดเมื่อกลับถึงพื้น
         }
     }
 
@@ -75,6 +80,4 @@ public class SharedPlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
-    
-    
 }
