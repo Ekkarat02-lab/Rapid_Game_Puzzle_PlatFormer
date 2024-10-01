@@ -11,6 +11,7 @@ TagManager:
   - Door
   - KeyItem
   - Platform
+  - Windows
   layers:
   - Default
   - TransparentFX
