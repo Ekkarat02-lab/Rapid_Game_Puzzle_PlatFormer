@@ -33,6 +33,8 @@ public class PlayerGravity : SharedPlayerController
         {
             KeyItemController.Instance.Update();
             Debug.Log("Get And Set Item");
+            GrabObject.instance.Update();
+            Debug.Log("Grab object");
         }
 
         // ปรับแรงโน้มถ่วงด้วยการกดปุ่มเมาส์

@@ -33,6 +33,8 @@ public class PlayerMovement : SharedPlayerController
         {
             KeyItemController.Instance.Update();
             Debug.Log("Get And Set Item");
+            GrabObject.instance.Update();
+            Debug.Log("Grab object");
         }
 
         // เรียกใช้การหมุนแผนที่
