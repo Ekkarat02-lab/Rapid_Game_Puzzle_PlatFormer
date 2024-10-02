@@ -14,18 +14,39 @@ public class SharedPlayerController : MonoBehaviour
 
     public Animator animator;
 
-    public void Start()
+    public virtual void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D not found! Ensure it's attached to the GameObject.");
+        }
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator not found! Ensure it's attached to the GameObject.");
+        }
     }
 
     public void Move(float horizontalInput)
     {
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D is null in Move method!");
+            return;
+        }
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator is null in Move method!");
+            return;
+        }
+
         float targetVelocityX = horizontalInput * moveSpeed;
         float newVelocityX = Mathf.SmoothDamp(rb.velocity.x, targetVelocityX, ref currentVelocity.x, smoothTime);
         rb.velocity = new Vector2(newVelocityX, rb.velocity.y);
 
-        // ตรวจจับความเร็วในแกน X เพื่อเปลี่ยนค่าแอนิเมชัน
         animator.SetFloat("Speed", Mathf.Abs(newVelocityX));
 
         FlipCharacter(horizontalInput);
@@ -51,28 +72,25 @@ public class SharedPlayerController : MonoBehaviour
         transform.localScale = scaler;
     }
 
-    // ฟังก์ชันกระโดด จะกระโดดได้ถ้าอยู่บนพื้นเท่านั้น
     public void Jump()
     {
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
-            animator.SetBool("IsJumping", true); // เล่นแอนิเมชันกระโดด
+            animator.SetBool("IsJumping", true);
         }
     }
 
-    // ฟังก์ชันเช็คว่า Player ชนกับพื้นดินที่มีแท็ก "Ground"
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("IsJumping", false); // หยุดแอนิเมชันกระโดดเมื่อกลับถึงพื้น
+            animator.SetBool("IsJumping", false);
         }
     }
 
-    // ฟังก์ชันเช็คเมื่อ Player หลุดออกจากพื้นดิน
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

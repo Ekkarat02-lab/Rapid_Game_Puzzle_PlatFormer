@@ -12,6 +12,7 @@ TagManager:
   - KeyItem
   - Platform
   - Windows
+  - Gallery
   layers:
   - Default
   - TransparentFX

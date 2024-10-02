@@ -4,26 +4,24 @@ public class SinglePlayer : SharedPlayerController
 {
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); // รับส่วนประกอบ Rigidbody2D
+        base.Start();
     }
 
     void Update()
     {
-        float horizontalInput = 0f; // กำหนดค่าการเคลื่อนที่ในแนวนอน
+        float horizontalInput = 0f;
 
-        // รับค่าการกดปุ่ม A หรือ D
         if (Input.GetKey(KeyCode.A))
         {
-            horizontalInput = -1f; // เคลื่อนที่ไปทางซ้าย
+            horizontalInput = -1f; 
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            horizontalInput = 1f; // เคลื่อนที่ไปทางขวา
+            horizontalInput = 1f; 
         }
 
-        Move(horizontalInput); // เรียกใช้ฟังก์ชันการเคลื่อนที่
+        Move(horizontalInput);
 
-        // ตรวจสอบการกดปุ่มกระโดดและใช้ไอเทม
         if (Input.GetKeyDown(KeyCode.W))
         {
             Jump();
@@ -34,19 +32,16 @@ public class SinglePlayer : SharedPlayerController
             KeyItemController.Instance.Update();
             Debug.Log("Get And Set Item");
         }
-        
-        // ปรับแรงโน้มถ่วงด้วยการกดปุ่มเมาส์
-        if (Input.GetMouseButton(0)) // ปุ่มซ้าย
+
+        if (Input.GetMouseButton(0)) 
         {
-            GameManager.Instance.GravityUp(); // เพิ่มแรงโน้มถ่วง
+            GameManager.Instance.GravityUp();
         }
-        else if (Input.GetMouseButton(1)) // ปุ่มขวา
+        else if (Input.GetMouseButton(1)) 
         {
-            GameManager.Instance.GravityDown(); // ลดแรงโน้มถ่วง
+            GameManager.Instance.GravityDown();
         }
-        
-        // เรียกใช้การหมุนแผนที่ (สมมุติว่ามีคลาส MapRotation)
+
         MapRotation.Instance.Update();
     }
-    
 }

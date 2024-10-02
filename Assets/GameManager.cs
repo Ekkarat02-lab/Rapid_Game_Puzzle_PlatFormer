@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
     private bool isArrowVisible = true;
  
     private int playerMode;
-    
-    void Awake()
+
+    private void Awake()
     {
         Instance = this;
     }
