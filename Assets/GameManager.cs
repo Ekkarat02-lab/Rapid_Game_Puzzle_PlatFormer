@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        int playerMode = MenuController.playerMode;
+        int playerMode = MainMenu.playerMode;
 
         if (playerMode == 1)
         {
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (MenuController.playerMode == 2)
+        if (MainMenu.playerMode == 2)
         {
             UpdateArrowUIPosition();
 
