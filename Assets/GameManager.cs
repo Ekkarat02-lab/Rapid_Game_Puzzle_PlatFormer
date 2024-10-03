@@ -172,6 +172,10 @@ public class GameManager : MonoBehaviour
         float gravitys = Gravity;
         Physics2D.gravity = new Vector2(0, gravitys);
         Gravity -= Time.deltaTime * GravityScale;
+        if (Gravity > 0)
+        {
+            Gravity = -9.82f;
+        }
     }
 
     public void GravityDown()
@@ -181,7 +185,7 @@ public class GameManager : MonoBehaviour
         Gravity += Time.deltaTime * GravityScale;
         if(Gravity >= 0)
         {
-            Gravity = 0.1f;
+            Gravity = - 0.1f;
         }
     }
 }

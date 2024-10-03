@@ -2,9 +2,16 @@ using UnityEngine;
 
 public class PlayerGravity : SharedPlayerController
 {
+    [SerializeField] private Transform rayPoint;
+    [SerializeField] private Transform grabPoint;
+    [SerializeField] private float rayDistance;
+
+    private GameObject grabObject;
+    private int layerIndex;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // รับส่วนประกอบ Rigidbody2D
+        layerIndex = LayerMask.NameToLayer("Interactable");
     }
 
     void Update()
@@ -15,6 +22,7 @@ public class PlayerGravity : SharedPlayerController
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             horizontalInput = -1f; // เคลื่อนที่ไปทางซ้าย
+            rayDistance = rayDistance * -1;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -45,5 +53,42 @@ public class PlayerGravity : SharedPlayerController
         {
             GameManager.Instance.GravityDown(); // ลดแรงโน้มถ่วง
         }
+        HandleGrabOrDrop();
+    }
+    private void HandleGrabOrDrop()
+    {
+        RaycastHit2D hitInfo = Physics2D.Raycast(rayPoint.position, transform.right, rayDistance);
+        if (grabObject == null)
+        {
+            if (hitInfo.collider != null && hitInfo.collider.gameObject.layer == layerIndex)
+            {
+                if (Input.GetKeyDown(KeyCode.DownArrow)) // Grab Object (DownArrow)
+                {
+                    grabObject = hitInfo.collider.gameObject;
+                    Rigidbody2D objectRb = grabObject.GetComponent<Rigidbody2D>();
+                    if (objectRb != null)
+                    {
+                        objectRb.isKinematic = true;
+                        grabObject.transform.position = grabPoint.position;
+                        grabObject.transform.SetParent(transform);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow)) // Drop Object (DownArrow)
+            {
+                Rigidbody2D objectRb = grabObject.GetComponent<Rigidbody2D>();
+                if (objectRb != null)
+                {
+                    objectRb.isKinematic = false;
+                    grabObject.transform.SetParent(null);
+                    grabObject = null;
+                }
+            }
+        }
+
+        Debug.DrawRay(rayPoint.position, transform.right * rayDistance);
     }
 }

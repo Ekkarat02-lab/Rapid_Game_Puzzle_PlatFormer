@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gravity: 9.82
-  GravityScale: 1
+  GravityScale: 4
   playerPrefab1: {fileID: 686613295601787281, guid: b43c5f1a864304444b2b00a16c252ec5, type: 3}
   playerPrefab2: {fileID: 3967178300636907234, guid: ac1d1faf7a74c1b4aab5004441b11f9a, type: 3}
   spawnPoints:
