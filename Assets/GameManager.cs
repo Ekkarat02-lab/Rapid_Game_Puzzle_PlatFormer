@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+
     [SerializeField] private float Gravity;
     [SerializeField] private float GravityScale;
 
@@ -16,7 +17,11 @@ public class GameManager : MonoBehaviour
     public Transform[] spawnPoints;
 
     public RectTransform arrowUI;
-      
+
+    // เพิ่มตัวแปรสำหรับ Panel และปุ่ม
+    public GameObject completionPanel; // Panel ที่จะโชว์เมื่อผู้เล่นเสร็จ
+    public Button backToMenuButton; // ปุ่มกลับไปที่เมนู
+    public Button nextLevelButton; // ปุ่มไปยังเลเวลถัดไป
 
     private GameObject player1Instance;
     private GameObject player2Instance;
@@ -26,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject currentControlledPlayer;
     private bool isArrowVisible = true;
- 
+
     private int playerMode;
 
     private void Awake()
@@ -61,6 +66,11 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(ShowArrowForLimitedTime());
         }
+
+        // ตั้งค่าให้ปุ่มถูกปิดในตอนเริ่มต้น
+        completionPanel.SetActive(false);
+        backToMenuButton.onClick.AddListener(BackToMenu);
+        nextLevelButton.onClick.AddListener(NextLevel);
     }
 
     void Update()
@@ -75,9 +85,23 @@ public class GameManager : MonoBehaviour
             }
 
             CheckAndRespawnIfNeeded();
+            CheckForCompletion(); // เพิ่มการเรียกฟังก์ชันนี้ที่นี่
+        }
+    }
+    
+    public void CheckForCompletion()
+    {
+        // เช็คว่า player ทั้งสองตัวมีแท็ก "Complete" หรือไม่
+        if (player1Instance != null && player2Instance != null)
+        {
+            if (player1Instance.CompareTag("Complete") && player2Instance.CompareTag("Complete"))
+            {
+                ShowCompletionPanel();
+            }
         }
     }
 
+    
     void RemoveUnnecessaryScripts(GameObject player)
     {
         var movementScript = player.GetComponent<PlayerMovement>();
@@ -137,7 +161,7 @@ public class GameManager : MonoBehaviour
             arrowUI.gameObject.SetActive(isArrowVisible);
         }
     }
-    
+
     void CheckAndRespawnIfNeeded()
     {
         if (player1Instance == null)
@@ -167,6 +191,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ShowCompletionPanel()
+    {
+        completionPanel.SetActive(true); // แสดง panel เมื่อทั้งสองตัวเสร็จ
+        Time.timeScale = 0; // หยุดเกมชั่วคราว
+    }
+
+    public void BackToMenu()
+    {
+        Time.timeScale = 1; // เริ่มเกมใหม่
+        SceneManager.LoadScene("MainMenu"); // เปลี่ยนไปยังหน้าเมนู
+    }
+
+    public void NextLevel()
+    {
+        Time.timeScale = 1; // เริ่มเกมใหม่
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // ไปยังเลเวลถัดไป
+    }
+
     public void GravityUp()
     {
         float gravitys = Gravity;
@@ -183,9 +225,9 @@ public class GameManager : MonoBehaviour
         float gravitys = Gravity;
         Physics2D.gravity = new Vector2(0, gravitys);
         Gravity += Time.deltaTime * GravityScale;
-        if(Gravity >= 0)
+        if (Gravity >= 0)
         {
-            Gravity = - 0.1f;
+            Gravity = -0.1f;
         }
     }
 }

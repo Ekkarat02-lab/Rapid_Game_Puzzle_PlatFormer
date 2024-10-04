@@ -79,7 +79,6 @@ public class SharedPlayerController : MonoBehaviour
 
     public void Jump()
     {
-        
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -105,11 +104,13 @@ public class SharedPlayerController : MonoBehaviour
             else
             {
                 isGrounded = false;
+                animator.SetBool("IsJumping", true);
             }
         }
         else
         {
             isGrounded = false;
+            animator.SetBool("IsJumping", true);
         }
         Debug.DrawRay(rayPointG.position, Vector2.down * rayDistanceG, Color.red);
     }
@@ -130,4 +131,13 @@ public class SharedPlayerController : MonoBehaviour
             isGrounded = false;
         }
     }*/
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Complete"))
+        {
+            // เพิ่มแท็ก "Complete" ให้กับผู้เล่นเมื่อชนกับ GameObject ที่มีแท็กนี้
+            gameObject.tag = "Complete";
+            GameManager.Instance.CheckForCompletion(); // เรียกฟังก์ชันใน GameManager
+        }
+    }
 }
