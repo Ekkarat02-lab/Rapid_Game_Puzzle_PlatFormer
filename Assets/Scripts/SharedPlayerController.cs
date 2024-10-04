@@ -89,6 +89,12 @@ public class SharedPlayerController : MonoBehaviour
 
     public void groundCheck()
     {
+        if (rayPointG == null)
+        {
+            Debug.LogError("rayPointG is null! Ensure it is assigned in the Inspector.");
+            return; // Exit the method if rayPointG is null
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(rayPointG.position, Vector2.down, rayDistanceG);
 
         if (hit.collider != null)
@@ -99,7 +105,6 @@ public class SharedPlayerController : MonoBehaviour
                 isGrounded = true;
                 animator.SetBool("IsJumping", false);
                 Debug.Log("Player is grounded.");
-                
             }
             else
             {
@@ -114,6 +119,7 @@ public class SharedPlayerController : MonoBehaviour
         }
         Debug.DrawRay(rayPointG.position, Vector2.down * rayDistanceG, Color.red);
     }
+
 
     /*private void OnCollisionEnter2D(Collision2D collision)
     {
