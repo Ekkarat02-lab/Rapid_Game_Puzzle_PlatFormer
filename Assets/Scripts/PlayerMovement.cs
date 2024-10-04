@@ -11,31 +11,34 @@ public class PlayerMovement : SharedPlayerController
 
     void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>(); // รับส่วนประกอบ Rigidbody2D
         layerIndex = LayerMask.NameToLayer("Interactable");
+        
     }
 
     void Update()
     {
         float horizontalInput = 0f; // กำหนดค่าการเคลื่อนที่ในแนวนอน
+        groundCheck();
 
         // รับค่าการกดปุ่ม A หรือ D
         if (Input.GetKey(KeyCode.A))
         {
             horizontalInput = -1f; // เคลื่อนที่ไปทางซ้าย
-            rayDistance = rayDistance * -1;
+            rayDistance = Mathf.Abs(rayDistance) * -1;
             
         }
         else if (Input.GetKey(KeyCode.D))
         {
             horizontalInput = 1f; // เคลื่อนที่ไปทางขวา
-            
+            rayDistance = Mathf.Abs(rayDistance);
         }
 
         Move(horizontalInput); // เรียกใช้ฟังก์ชันการเคลื่อนที่
 
         // ตรวจสอบการกดปุ่มกระโดดและใช้ไอเทม
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             Jump();
         }
@@ -50,6 +53,7 @@ public class PlayerMovement : SharedPlayerController
         // เรียกใช้การหมุนแผนที่
         MapRotation.Instance.Update();
         HandleGrabOrDrop();
+        
     }
     
     
@@ -91,4 +95,5 @@ public class PlayerMovement : SharedPlayerController
 
         Debug.DrawRay(rayPoint.position, transform.right * rayDistance);
     }
+    
 }

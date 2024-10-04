@@ -18,19 +18,21 @@ public class SinglePlayer : SharedPlayerController
     void Update()
     {
         float horizontalInput = 0f;
-
+        groundCheck();
         if (Input.GetKey(KeyCode.A))
         {
-            horizontalInput = -1f; 
+            horizontalInput = -1f;
+            rayDistance = Mathf.Abs(rayDistance) * -1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            horizontalInput = 1f; 
+            horizontalInput = 1f;
+            rayDistance = Mathf.Abs(rayDistance);
         }
 
         Move(horizontalInput);
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             Jump();
         }

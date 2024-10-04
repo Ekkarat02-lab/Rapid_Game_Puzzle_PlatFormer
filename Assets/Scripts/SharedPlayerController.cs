@@ -6,9 +6,13 @@ public class SharedPlayerController : MonoBehaviour
     public float jumpForce = 7f;
     public Rigidbody2D rb;
     public float smoothTime = 0.3f;
+    public Transform rayPointG;
+    public float rayDistanceG;
+   
 
     protected bool isGrounded;
     protected Vector2 currentVelocity = Vector2.zero;
+    private int groundLayerIndex;
 
     private bool facingRight = true;
 
@@ -18,6 +22,7 @@ public class SharedPlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        groundLayerIndex = LayerMask.NameToLayer("groundLayer");
         if (rb == null)
         {
             Debug.LogError("Rigidbody2D not found! Ensure it's attached to the GameObject.");
@@ -74,6 +79,7 @@ public class SharedPlayerController : MonoBehaviour
 
     public void Jump()
     {
+        
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -82,7 +88,33 @@ public class SharedPlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void groundCheck()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(rayPointG.position, Vector2.down, rayDistanceG);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Raycast hit: " + hit.collider.name);  // Log what the ray hits
+            if (hit.collider.gameObject.layer == groundLayerIndex)
+            {
+                isGrounded = true;
+                animator.SetBool("IsJumping", false);
+                Debug.Log("Player is grounded.");
+                
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        Debug.DrawRay(rayPointG.position, Vector2.down * rayDistanceG, Color.red);
+    }
+
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -97,5 +129,5 @@ public class SharedPlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-    }
+    }*/
 }

@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 191232879}
   - component: {fileID: 191232878}
   - component: {fileID: 191232877}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platformer (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.25, y: -2.07, z: 0}
-  m_LocalScale: {x: 1.0995494, y: 1.1873885, z: 0.624744}
+  m_LocalScale: {x: 0.80410045, y: 0.8683372, z: 0.4568753}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 1668700638}
   - component: {fileID: 1668700637}
   - component: {fileID: 1668700636}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platformer (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 1927313683}
   - component: {fileID: 1927313682}
   - component: {fileID: 1927313684}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platformMother
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1374,7 +1374,7 @@ GameObject:
   - component: {fileID: 1971073821}
   - component: {fileID: 1971073820}
   - component: {fileID: 1971073822}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platformer
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1504,7 +1504,7 @@ GameObject:
   - component: {fileID: 2085047371}
   - component: {fileID: 2085047370}
   - component: {fileID: 2085047369}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: platformer (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}

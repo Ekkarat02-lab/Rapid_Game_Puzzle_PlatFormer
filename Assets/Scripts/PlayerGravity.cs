@@ -10,6 +10,7 @@ public class PlayerGravity : SharedPlayerController
     private int layerIndex;
     void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>(); // รับส่วนประกอบ Rigidbody2D
         layerIndex = LayerMask.NameToLayer("Interactable");
     }
@@ -18,23 +19,25 @@ public class PlayerGravity : SharedPlayerController
     {
         float horizontalInput = 0f; // กำหนดค่าการเคลื่อนที่ในแนวนอน
 
+        groundCheck();
         // รับค่าการกดปุ่มซ้ายหรือขวา
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             horizontalInput = -1f; // เคลื่อนที่ไปทางซ้าย
-            rayDistance = rayDistance * -1;
+            rayDistance = Mathf.Abs(rayDistance) * -1;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             horizontalInput = 1f; // เคลื่อนที่ไปทางขวา
+            rayDistance = Mathf.Abs(rayDistance);
         }
 
         Move(horizontalInput); // เรียกใช้ฟังก์ชันการเคลื่อนที่
 
         // ตรวจสอบการกดปุ่มกระโดดและใช้ไอเทม
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
-            Jump();
+            Jump();    
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
