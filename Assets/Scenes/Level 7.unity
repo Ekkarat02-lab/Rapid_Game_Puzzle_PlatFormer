@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 196267896}
   - component: {fileID: 196267897}
   m_Layer: 7
-  m_Name: Block (8)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1532,7 +1532,7 @@ GameObject:
   - component: {fileID: 520539765}
   - component: {fileID: 520539766}
   m_Layer: 7
-  m_Name: Block (6)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2226,7 +2226,7 @@ GameObject:
   - component: {fileID: 740121763}
   - component: {fileID: 740121764}
   m_Layer: 7
-  m_Name: Block (5)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3167,7 +3167,7 @@ GameObject:
   - component: {fileID: 1235075773}
   - component: {fileID: 1235075774}
   m_Layer: 7
-  m_Name: Block (3)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3635,7 +3635,7 @@ GameObject:
   - component: {fileID: 1493933752}
   - component: {fileID: 1493933753}
   m_Layer: 7
-  m_Name: Block (7)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4271,7 +4271,7 @@ GameObject:
   - component: {fileID: 1682056242}
   - component: {fileID: 1682056243}
   m_Layer: 7
-  m_Name: Block (9)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4816,7 +4816,7 @@ GameObject:
   - component: {fileID: 1837309603}
   - component: {fileID: 1837309604}
   m_Layer: 7
-  m_Name: Block (2)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5076,7 +5076,7 @@ GameObject:
   - component: {fileID: 1893185204}
   - component: {fileID: 1893185205}
   m_Layer: 7
-  m_Name: Block (1)
+  m_Name: Block
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5465,7 +5465,7 @@ GameObject:
   - component: {fileID: 2009351154}
   m_Layer: 7
   m_Name: Block
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
