@@ -1096,7 +1096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &614428552
 Rigidbody2D:
   serializedVersion: 4
@@ -2182,7 +2182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1079160029
 Transform:
   m_ObjectHideFlags: 0
@@ -2783,6 +2783,7 @@ MonoBehaviour:
   arrowUI: {fileID: 0}
   completionPanel: {fileID: 973486426}
   backToMenuButton: {fileID: 1167223261}
+  backToMenuButton2: {fileID: 0}
   nextLevelButton: {fileID: 1044270963}
 --- !u!4 &1563203395
 Transform:
