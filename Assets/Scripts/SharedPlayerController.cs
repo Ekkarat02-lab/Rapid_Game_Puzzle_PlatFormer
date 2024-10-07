@@ -38,13 +38,11 @@ public class SharedPlayerController : MonoBehaviour
     {
         if (rb == null)
         {
-            Debug.LogError("Rigidbody2D is null in Move method!");
             return;
         }
 
         if (animator == null)
         {
-            Debug.LogError("Animator is null in Move method!");
             return;
         }
 
@@ -91,7 +89,6 @@ public class SharedPlayerController : MonoBehaviour
     {
         if (rayPointG == null)
         {
-            Debug.LogError("rayPointG is null! Ensure it is assigned in the Inspector.");
             return; // Exit the method if rayPointG is null
         }
 
@@ -104,7 +101,6 @@ public class SharedPlayerController : MonoBehaviour
             {
                 isGrounded = true;
                 animator.SetBool("IsJumping", false);
-                Debug.Log("Player is grounded.");
             }
             else
             {

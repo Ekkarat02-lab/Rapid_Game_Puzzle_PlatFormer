@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class GalleryManager : MonoBehaviour
 {
-    public Image[] galleryImages; // อ้างถึง Image ใน UI สำหรับแสดงผลรูปภาพ
-    public Sprite[] unlockedSprites; // อ้างถึง Sprite ของรูปภาพที่ปลดล็อคได้
+    public Image[] galleryImages; // ๏ฟฝ๏ฟฝาง๏ฟฝึง Image ๏ฟฝ UI ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝสด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูป๏ฟฝาพ
+    public Sprite[] unlockedSprites; // ๏ฟฝ๏ฟฝาง๏ฟฝึง Sprite ๏ฟฝอง๏ฟฝูป๏ฟฝาพ๏ฟฝ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ
 
     private void Start()
     {
         
-        for (int i = 0; i < galleryImages.Length; i++)// ตรวจสอบทุกรูปภาพใน Gallery และอัปเดตตามสถานะการปลดล็อค
+        for (int i = 0; i < galleryImages.Length; i++)
         {
             if (UnlockCollectibleManager.instance.IsImageUnlocked(i))
             {
                 
-                galleryImages[i].sprite = unlockedSprites[i];// เปลี่ยนรูปใน Gallery ให้เป็นรูปที่ปลดล็อค
+                galleryImages[i].sprite = unlockedSprites[i];// ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยน๏ฟฝูป๏ฟฝ Gallery ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูป๏ฟฝ๏ฟฝ๏ฟฝลด๏ฟฝ๏ฟฝอค
 
             }
         }
