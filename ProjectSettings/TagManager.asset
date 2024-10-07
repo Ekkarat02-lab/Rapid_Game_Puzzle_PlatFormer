@@ -14,6 +14,7 @@ TagManager:
   - Windows
   - Gallery
   - Complete
+  - Weight
   layers:
   - Default
   - TransparentFX
