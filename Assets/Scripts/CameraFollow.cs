@@ -2,57 +2,64 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform player; // อ้างอิงไปที่ตำแหน่งของผู้เล่น
-    public Vector3 offset; // ค่าชดเชยระหว่างกล้องกับผู้เล่น
-    public float smoothSpeed = 0.125f; // ความเร็วในการติดตามกล้อง
-    public float defaultSize = 5f; // ขนาดปกติของการซูมกล้อง
-    public float zoomOutSize = 10f; // ขนาดซูมออกเมื่อต้องการเห็นผู้เล่นหลายคน
-    public string playerTag1 = "Player"; // แท็กของผู้เล่น 1
-    public string playerTag2 = "Player"; // แท็กของผู้เล่น 2
+    public string player1Tag = "Player1";
+    public string player2Tag = "Player2";
+    public float minZoom = 3f;
+    public float maxZoom = 10f;
+    public float zoomLimiter = 10f;
+    public float smoothTime = 0.5f;
+
+    private Transform player1;
+    private Transform player2;
+    private Vector3 velocity;
+    private Camera cam;
 
     void Start()
     {
-        FindPlayers();
+        cam = GetComponent<Camera>();
+
+
+        player1 = GameObject.FindGameObjectWithTag(player1Tag).transform;
+        player2 = GameObject.FindGameObjectWithTag(player2Tag).transform;
     }
 
     void LateUpdate()
     {
-        UpdateCamera();
+        if (player1 == null || player2 == null)
+        {
+
+            player1 = GameObject.FindGameObjectWithTag(player1Tag)?.transform;
+            player2 = GameObject.FindGameObjectWithTag(player2Tag)?.transform;
+            return;
+        }
+
+        MoveCamera();
+        ZoomCamera();
     }
 
-    void FindPlayers()
+    void MoveCamera()
     {
-        // ค้นหาผู้เล่นด้วยแท็ก Player1 และ Player2
-        GameObject player1Obj = GameObject.FindGameObjectWithTag(playerTag1);
-        GameObject player2Obj = GameObject.FindGameObjectWithTag(playerTag2);
+        Vector3 centerPoint = GetCenterPoint();
+        Vector3 newPosition = centerPoint;
 
-        // หากพบผู้เล่น 2 คน ให้ซูมออก
-        if (player1Obj != null && player2Obj != null)
-        {
-            player = null; // ไม่จำเป็นต้องติดตามผู้เล่นคนเดียว
-            Camera.main.orthographicSize = zoomOutSize;
-        }
-        // หากพบผู้เล่นเพียงคนเดียว ให้ติดตามผู้เล่นคนนั้นและซูมปกติ
-        else if (player1Obj != null)
-        {
-            player = player1Obj.transform;
-            Camera.main.orthographicSize = defaultSize;
-        }
-        else if (player2Obj != null)
-        {
-            player = player2Obj.transform;
-            Camera.main.orthographicSize = defaultSize;
-        }
+        newPosition.z = transform.position.z;
+        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
     }
 
-    void UpdateCamera()
+    void ZoomCamera()
     {
-        // ติดตามผู้เล่นหากมีเพียงผู้เล่นเดียว
-        if (player != null)
-        {
-            Vector3 desiredPosition = player.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-            transform.position = smoothedPosition;
-        }
+        float distance = GetGreatestDistance();
+        float newZoom = Mathf.Lerp(minZoom, maxZoom, distance / zoomLimiter);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
+    }
+
+    Vector3 GetCenterPoint()
+    {
+        return (player1.position + player2.position) / 2;
+    }
+
+    float GetGreatestDistance()
+    {
+        return Vector3.Distance(player1.position, player2.position);
     }
 }

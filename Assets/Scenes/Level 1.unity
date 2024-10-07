@@ -1908,13 +1908,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1979ed2a37bf1634f8a9a3018f1d8a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  smoothSpeed: 0.125
-  defaultSize: 5
-  zoomOutSize: 10
-  playerTag1: Player
-  playerTag2: Player
+  player1Tag: Player1
+  player2Tag: Player2
+  minZoom: 3
+  maxZoom: 10
+  zoomLimiter: 10
+  smoothTime: 0.5
 --- !u!1 &889116150
 GameObject:
   m_ObjectHideFlags: 0
