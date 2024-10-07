@@ -10,7 +10,7 @@ public class UnlockCollectibleManager : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
-        imageUnlocked = new bool[1]; 
+        imageUnlocked = new bool[3]; 
     }
     // ¿Ñ§¡ìªÑ¹»Å´ÅçÍ¤ÃÙ»
     public void UnlockImage(int index)
