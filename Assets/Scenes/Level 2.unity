@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 195467954}
   - component: {fileID: 195467953}
   m_Layer: 0
-  m_Name: noon
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -319,7 +319,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2032d5d2a60d0034c8e0fd93c0012a55, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -339,12 +339,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195467952}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2, y: 5.8, z: 0}
   m_LocalScale: {x: 2.5588, y: 2.6386, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 614428554}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &317286839
 PrefabInstance:
@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 388806401}
   - component: {fileID: 388806403}
   - component: {fileID: 388806402}
+  - component: {fileID: 388806404}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -2003,6 +2004,42 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &388806404
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388806400}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &465955375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,16 +2313,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 195467954}
   - {fileID: 861950389}
   - {fileID: 1779927603}
-  - {fileID: 644369652}
-  - {fileID: 1062771392}
   - {fileID: 674879599}
   - {fileID: 1796178749}
   - {fileID: 1553588920}
   - {fileID: 1728582648}
   - {fileID: 1112677881}
   - {fileID: 1730999374}
+  - {fileID: 1062771392}
+  - {fileID: 644369652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &644369651
@@ -3654,7 +3692,6 @@ MonoBehaviour:
   arrowUI: {fileID: 0}
   completionPanel: {fileID: 973486426}
   backToMenuButton: {fileID: 1167223261}
-  backToMenuButton2: {fileID: 0}
   nextLevelButton: {fileID: 1044270963}
 --- !u!4 &1563203395
 Transform:
@@ -4600,4 +4637,3 @@ SceneRoots:
   - {fileID: 1563203395}
   - {fileID: 338123235}
   - {fileID: 1883846323}
-  - {fileID: 195467954}

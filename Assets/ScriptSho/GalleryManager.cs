@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GalleryManager : MonoBehaviour
 {
-    public Image[] galleryImages; // ��ҧ�֧ Image � UI ����Ѻ�ʴ����ٻ�Ҿ
-    public Sprite[] unlockedSprites; // ��ҧ�֧ Sprite �ͧ�ٻ�Ҿ���Ŵ��ͤ��
+    public Image[] galleryImages; 
+    public Sprite[] unlockedSprites; 
 
     private void Start()
     {
@@ -16,8 +16,7 @@ public class GalleryManager : MonoBehaviour
             if (UnlockCollectibleManager.instance.IsImageUnlocked(i))
             {
                 
-                galleryImages[i].sprite = unlockedSprites[i];// ����¹�ٻ� Gallery ������ٻ���Ŵ��ͤ
-
+                galleryImages[i].sprite = unlockedSprites[i];
             }
         }
     }
