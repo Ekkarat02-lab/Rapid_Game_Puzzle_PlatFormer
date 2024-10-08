@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     private bool isArrowVisible = true;
 
     private int playerMode;
-
     
     private void Awake()
     {

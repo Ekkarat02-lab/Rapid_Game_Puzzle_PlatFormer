@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CollectibleUnlock : MonoBehaviour
 {
-    public int imageIndex; // เลขลำดับของรูปที่จะปลดล็อค
+    public int imageIndex;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player1") || collision.CompareTag("Player2"))
         {
-            UnlockCollectibleManager.instance.UnlockImage(imageIndex);// ปลดล็อครูปภาพโดยเรียกใช้ UnlockCollectibleManager
-            Destroy(gameObject); // ทำลาย Object หลังจากชน
+            UnlockCollectibleManager.instance.UnlockImage(imageIndex);
+            Destroy(gameObject);
         }
     }
 }
