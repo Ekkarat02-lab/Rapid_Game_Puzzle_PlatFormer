@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1244446251382387235}
   - component: {fileID: 8895566712058446980}
   - component: {fileID: 7835051678404776750}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: PlatC2
   m_TagString: Platform
   m_Icon: {fileID: 0}

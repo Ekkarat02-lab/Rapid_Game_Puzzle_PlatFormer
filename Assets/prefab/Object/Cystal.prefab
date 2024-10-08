@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5508953897134757326}
   - component: {fileID: 85626039814851859}
   - component: {fileID: 3801955393657291370}
+  - component: {fileID: 4734287540343112198}
   m_Layer: 6
   m_Name: Cystal
-  m_TagString: KeyItem
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,3 +159,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4734287540343112198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866439763030240684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba4a2c70f29884469aca1e6307095e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 3801955393657291370}
