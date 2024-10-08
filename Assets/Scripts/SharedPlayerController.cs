@@ -96,7 +96,7 @@ public class SharedPlayerController : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("Raycast hit: " + hit.collider.name);  // Log what the ray hits
+            
             if (hit.collider.gameObject.layer == groundLayerIndex)
             {
                 isGrounded = true;
