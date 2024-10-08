@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class RespawnController : MonoBehaviour
 {
     public static RespawnController Instance;
-
-
+    
     public Transform respawnPointPlayer1;
     public Transform respawnPointPlayer2;
  
@@ -15,43 +14,31 @@ public class RespawnController : MonoBehaviour
         Instance = this;
         
     }
-    private void Start()
-    {
-        
-        
-    }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player1") || collision.CompareTag ("Player2"))
         {
             if (collision.gameObject.CompareTag("Player1"))
             {
-                
-                collision.transform.position = respawnPointPlayer1.position; // Êè§ Player 1 ä»·Õè respawn point ¢Í§ Player 1
-                
+                collision.transform.position = respawnPointPlayer1.position; // ï¿½ï¿½ Player 1 ä»·ï¿½ï¿½ respawn point ï¿½Í§ Player 1
             }
             else if (collision.gameObject.CompareTag("Player2"))
             {
-                
-                collision.transform.position = respawnPointPlayer2.position; // Êè§ Player 2 ä»·Õè respawn point ¢Í§ Player 2
-               
+                collision.transform.position = respawnPointPlayer2.position; // ï¿½ï¿½ Player 2 ä»·ï¿½ï¿½ respawn point ï¿½Í§ Player 2
             }
 
         }
     }
+    
     public void SetRespawnPoint(Transform newRespawnPoint, string playerTag)
     {
         if (playerTag == "Player1")
         {
-            respawnPointPlayer1 = newRespawnPoint; // µÑé§¤èÒ¨Ø´à¡Ô´ãËÁè¢Í§ Player 1
+            respawnPointPlayer1 = newRespawnPoint; // ï¿½ï¿½é§¤ï¿½Ò¨Ø´ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Í§ Player 1
         }
         else if (playerTag == "Player2")
         {
-            respawnPointPlayer2 = newRespawnPoint; // µÑé§¤èÒ¨Ø´à¡Ô´ãËÁè¢Í§ Player 2
+            respawnPointPlayer2 = newRespawnPoint; // ï¿½ï¿½é§¤ï¿½Ò¨Ø´ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Í§ Player 2
         }
     }
-    
-    
 }

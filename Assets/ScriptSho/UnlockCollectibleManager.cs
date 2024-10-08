@@ -6,13 +6,21 @@ public class UnlockCollectibleManager : MonoBehaviour
 {
     public static UnlockCollectibleManager instance;
     public bool[] imageUnlocked;
+    
     private void Awake()
     {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-        imageUnlocked = new bool[4]; 
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            imageUnlocked = new bool[4]; 
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    // ¿Ñ§¡ìªÑ¹»Å´ÅçÍ¤ÃÙ»
+
     public void UnlockImage(int index)
     {
         if (index >= 0 && index < imageUnlocked.Length)
@@ -20,9 +28,8 @@ public class UnlockCollectibleManager : MonoBehaviour
             imageUnlocked[index] = true;
         }
     }
-
     
-    public bool IsImageUnlocked(int index)// ¿Ñ§¡ìªÑ¹µÃÇ¨ÊÍºÇèÒÃÙ»¶Ù¡»Å´ÅçÍ¤ËÃ×ÍäÁè
+    public bool IsImageUnlocked(int index)
     {
         if (index >= 0 && index < imageUnlocked.Length)
         {

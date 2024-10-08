@@ -115,31 +115,12 @@ public class SharedPlayerController : MonoBehaviour
         }
         Debug.DrawRay(rayPointG.position, Vector2.down * rayDistanceG, Color.red);
     }
-
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            animator.SetBool("IsJumping", false);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }*/
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Complete"))
         {
-            // เพิ่มแท็ก "Complete" ให้กับผู้เล่นเมื่อชนกับ GameObject ที่มีแท็กนี้
             gameObject.tag = "Complete";
-            GameManager.Instance.CheckForCompletion(); // เรียกฟังก์ชันใน GameManager
+            GameManager.Instance.CheckForCompletion(); 
         }
     }
 }

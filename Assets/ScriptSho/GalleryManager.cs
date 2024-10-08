@@ -10,7 +10,6 @@ public class GalleryManager : MonoBehaviour
 
     private void Start()
     {
-        
         for (int i = 0; i < galleryImages.Length; i++)
         {
             if (UnlockCollectibleManager.instance.IsImageUnlocked(i))

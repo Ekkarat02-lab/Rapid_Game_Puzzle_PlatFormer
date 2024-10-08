@@ -4719,7 +4719,7 @@ MonoBehaviour:
   - {fileID: 355696694}
   - {fileID: 724059489}
   arrowUI: {fileID: 593006515}
-  completionPanel: {fileID: 0}
+  completionPanel: {fileID: 650395632}
   backToMenuButton: {fileID: 298003522}
   backToMenuButton1: {fileID: 326286286}
   nextLevelButton: {fileID: 0}

@@ -12,7 +12,5 @@ public class Checkpoint : MonoBehaviour
             RespawnController.Instance.SetRespawnPoint(transform, collision.tag); //Overrides the player's spawn point.
             trigger.enabled = false;
         }
-
     }
-
 }
