@@ -6,19 +6,30 @@ public class SinglePlayer : SharedPlayerController
     [SerializeField] private Transform grabPoint;
     [SerializeField] private float rayDistance;
 
-
     private GameObject grabObject;
     private int layerIndex;
+    private bool isGrounded = false;
+
     void Start()
     {
         base.Start();
         layerIndex = LayerMask.NameToLayer("Interactable");
+
+        if (rayPoint == null)
+        {
+            Debug.LogError("rayPoint is not assigned!");
+        }
+
+        if (grabPoint == null)
+        {
+            Debug.LogError("grabPoint is not assigned!");
+        }
     }
 
     void Update()
     {
         float horizontalInput = 0f;
-        groundCheck();
+
         if (Input.GetKey(KeyCode.A))
         {
             horizontalInput = -1f;
@@ -55,10 +66,26 @@ public class SinglePlayer : SharedPlayerController
         MapRotation.Instance.Update();
         HandleGrabOrDrop();
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
     private void HandleGrabOrDrop()
     {
         RaycastHit2D hitInfo = Physics2D.Raycast(rayPoint.position, transform.right, rayDistance);
-
 
         if (grabObject == null)
         {
@@ -90,7 +117,6 @@ public class SinglePlayer : SharedPlayerController
                 }
             }
         }
-
         Debug.DrawRay(rayPoint.position, transform.right * rayDistance);
     }
 }
