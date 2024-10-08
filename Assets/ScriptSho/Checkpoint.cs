@@ -7,9 +7,9 @@ public class Checkpoint : MonoBehaviour
     public BoxCollider2D trigger;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player1"))
         {
-            RespawnController.Instance.respawnPoint = transform;//Overrides the player's spawn point.
+            RespawnController.Instance.SetRespawnPoint(transform, collision.tag); //Overrides the player's spawn point.
             trigger.enabled = false;
         }
 

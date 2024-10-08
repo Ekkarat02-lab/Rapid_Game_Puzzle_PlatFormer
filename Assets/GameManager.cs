@@ -21,8 +21,11 @@ public class GameManager : MonoBehaviour
     // เพิ่มตัวแปรสำหรับ Panel และปุ่ม
     public GameObject completionPanel; // Panel ที่จะโชว์เมื่อผู้เล่นเสร็จ
     public Button backToMenuButton; // ปุ่มกลับไปที่เมนู
+    public Button backToMenuButton1;
 
     public Button nextLevelButton; // ปุ่มไปยังเลเวลถัดไป
+
+
 
     private GameObject player1Instance;
     private GameObject player2Instance;
@@ -67,10 +70,11 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(ShowArrowForLimitedTime());
         }
-
+       
         // ตั้งค่าให้ปุ่มถูกปิดในตอนเริ่มต้น
         completionPanel.SetActive(false);
         backToMenuButton.onClick.AddListener(BackToMenu);
+        backToMenuButton1.onClick.AddListener(BackToMenu);
         nextLevelButton.onClick.AddListener(NextLevel);
     }
 

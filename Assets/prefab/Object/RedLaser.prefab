@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 3107952381901814997}
   - component: {fileID: 6165022247168261130}
   - component: {fileID: 6092860169199898330}
-  - component: {fileID: -4979168678291771277}
+  - component: {fileID: 1461405922272890336}
+  - component: {fileID: 5435417714650564025}
   m_Layer: 0
   m_Name: RedLaser
-  m_TagString: Platform
+  m_TagString: KillPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-4979168678291771277
+--- !u!114 &1461405922272890336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,5 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707481ebefa535e4f89aa258ea78c980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
-  destroyCountText: {fileID: 0}
+  respawnPointPlayer1: {fileID: 0}
+  respawnPointPlayer2: {fileID: 0}
+--- !u!114 &5435417714650564025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371372950299756658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4704b6453338f7429862d3dd075593a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressurePlates:
+  - {fileID: 0}
