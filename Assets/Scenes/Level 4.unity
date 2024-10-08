@@ -2047,6 +2047,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenLaser
       objectReference: {fileID: 0}
+    - target: {fileID: 1371372950299756658, guid: 35d17ae8f8d3ec941984a2c7c76e2251, type: 3}
+      propertyPath: m_TagString
+      value: KillPlayer
+      objectReference: {fileID: 0}
     - target: {fileID: 2110994878760437585, guid: 35d17ae8f8d3ec941984a2c7c76e2251, type: 3}
       propertyPath: respawnPointPlayer1
       value: 
