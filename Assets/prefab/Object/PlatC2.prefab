@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8230125260980310512}
   - component: {fileID: 1244446251382387235}
   - component: {fileID: 8895566712058446980}
-  m_Layer: 7
+  - component: {fileID: 7835051678404776750}
+  m_Layer: 6
   m_Name: PlatC2
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7835051678404776750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7850910885233158166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9836abab969184a47a5bb8bf34f44b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expectedTag: KeyItem

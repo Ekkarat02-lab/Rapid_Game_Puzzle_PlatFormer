@@ -6,8 +6,6 @@ TagManager:
   tags:
   - Ground
   - KillPlayer
-  - RedKey
-  - BlueKey
   - Door
   - KeyItem
   - Platform
@@ -17,6 +15,7 @@ TagManager:
   - Weight
   - Player1
   - Player2
+  - Key
   layers:
   - Default
   - TransparentFX

@@ -12,11 +12,6 @@ public class GrabObjectP2 : MonoBehaviour
     private GameObject grabObject;
     private int layerIndex;
 
-    private void Start()
-    {
-        layerIndex = LayerMask.NameToLayer("Interactable");
-    }
-
     private void Update()
     {
         HandleGrabOrDrop();
