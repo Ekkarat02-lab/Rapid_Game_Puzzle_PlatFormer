@@ -33,14 +33,15 @@ public class Door : MonoBehaviour
 
     private void UnlockedDoor()
     {
-            isUnlocked = true;
-            Debug.Log("Door is unlocked");
-            GetComponent<BoxCollider2D>().enabled = false; //open door  
+        isUnlocked = true;
+        Debug.Log("Door is unlocked");
+        GetComponent<BoxCollider2D>().enabled = false; //open door  
+        Destroy(this.gameObject);
     }
     private void CloseDoor()
     {
-            isUnlocked = false;
-            Debug.Log("Door is closed");
-            GetComponent<BoxCollider2D>().enabled = true;
+        isUnlocked = false;
+        Debug.Log("Door is closed");
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 }
