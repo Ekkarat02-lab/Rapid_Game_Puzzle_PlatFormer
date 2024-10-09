@@ -4068,7 +4068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56784485422d3af40a02a66bb929dfad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 100
+  rotationSpeed: 125
 --- !u!4 &614428554
 Transform:
   m_ObjectHideFlags: 0
@@ -5367,13 +5367,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1553588920}
     m_Modifications:
+    - target: {fileID: 85626039814851859, guid: 3801d7d0530d8f249a9965b9475ef6c5, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6907551996459609734, guid: 3801d7d0530d8f249a9965b9475ef6c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.28
       objectReference: {fileID: 0}
     - target: {fileID: 6907551996459609734, guid: 3801d7d0530d8f249a9965b9475ef6c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.85
+      value: -8.08
       objectReference: {fileID: 0}
     - target: {fileID: 6907551996459609734, guid: 3801d7d0530d8f249a9965b9475ef6c5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5706,7 +5710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8230125260980310512, guid: ce9a0ba1fff8a2944b905e737fb092ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.95
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 8230125260980310512, guid: ce9a0ba1fff8a2944b905e737fb092ef, type: 3}
       propertyPath: m_LocalPosition.z

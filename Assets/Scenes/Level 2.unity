@@ -528,6 +528,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1371372950299756658, guid: cea52dbb383799245878ab417a47fd44, type: 3}
+      propertyPath: m_TagString
+      value: KillPlayer
+      objectReference: {fileID: 0}
     - target: {fileID: 3107952381901814997, guid: cea52dbb383799245878ab417a47fd44, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.89186
@@ -592,6 +596,10 @@ PrefabInstance:
       propertyPath: respawnPointPlayer2
       value: 
       objectReference: {fileID: 724059489}
+    - target: {fileID: 6092860169199898330, guid: cea52dbb383799245878ab417a47fd44, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2564,7 +2572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56784485422d3af40a02a66bb929dfad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 175
+  rotationSpeed: 125
 --- !u!4 &614428554
 Transform:
   m_ObjectHideFlags: 0
@@ -3022,6 +3030,10 @@ PrefabInstance:
       propertyPath: respawnPointPlayer2
       value: 
       objectReference: {fileID: 724059489}
+    - target: {fileID: 6092860169199898330, guid: cea52dbb383799245878ab417a47fd44, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4811,6 +4823,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1371372950299756658, guid: cea52dbb383799245878ab417a47fd44, type: 3}
+      propertyPath: m_TagString
+      value: KillPlayer
+      objectReference: {fileID: 0}
     - target: {fileID: 3107952381901814997, guid: cea52dbb383799245878ab417a47fd44, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.89186
@@ -4875,6 +4891,10 @@ PrefabInstance:
       propertyPath: respawnPointPlayer2
       value: 
       objectReference: {fileID: 724059489}
+    - target: {fileID: 6092860169199898330, guid: cea52dbb383799245878ab417a47fd44, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
