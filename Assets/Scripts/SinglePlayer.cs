@@ -5,14 +5,25 @@ public class SinglePlayer : SharedPlayerController
     [SerializeField] private Transform rayPoint;
     [SerializeField] private Transform grabPoint;
     [SerializeField] private float rayDistance;
+    [SerializeField] private float jumpForce = 5f; // เพิ่มค่า jumpForce สำหรับการกระโดด
+    [SerializeField] private LayerMask groundLayer; // ระบุเลเยอร์ของพื้น
+    [SerializeField] private Animator animator; // เพิ่ม Animator สำหรับอนิเมชัน
 
     private GameObject grabObject;
     private int layerIndex;
     private bool isGrounded = false;
+    private Rigidbody2D rb;
 
     void Start()
     {
         base.Start();
+        rb = GetComponent<Rigidbody2D>(); // รับค่า Rigidbody2D ของตัวละคร
+        animator = GetComponent<Animator>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D is not attached to the player!");
+        }
+
         layerIndex = LayerMask.NameToLayer("Interactable");
 
         if (rayPoint == null)
@@ -24,12 +35,18 @@ public class SinglePlayer : SharedPlayerController
         {
             Debug.LogError("grabPoint is not assigned!");
         }
+
+        if (animator == null)
+        {
+            Debug.LogError("Animator is not assigned!");
+        }
     }
 
     void Update()
     {
         float horizontalInput = 0f;
 
+        // ตรวจสอบการเคลื่อนไหวซ้าย-ขวา
         if (Input.GetKey(KeyCode.A))
         {
             horizontalInput = -1f;
@@ -43,11 +60,13 @@ public class SinglePlayer : SharedPlayerController
 
         Move(horizontalInput);
 
+        // กระโดดเมื่ออยู่บนพื้น
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             Jump();
         }
 
+        // ตรวจสอบการกดปุ่มอื่นๆ
         if (Input.GetKeyDown(KeyCode.S))
         {
             KeyItemController.Instance.Update();
@@ -67,11 +86,21 @@ public class SinglePlayer : SharedPlayerController
         HandleGrabOrDrop();
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    // ฟังก์ชัน Jump สำหรับการกระโดด
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce); // เพิ่มแรงกระโดด
+        isGrounded = false; // เปลี่ยนสถานะหลังจากกระโดด
+        animator.SetBool("IsJumping", true); // เล่นอนิเมชันการกระโดด
+    }
+
+    // ตรวจสอบการชนกับพื้น
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            isGrounded = true;
+            isGrounded = true; // ตั้งค่าว่าตัวละครอยู่บนพื้น
+            animator.SetBool("IsJumping", false); // หยุดอนิเมชันการกระโดดเมื่อกลับสู่พื้น
         }
     }
 
@@ -79,7 +108,8 @@ public class SinglePlayer : SharedPlayerController
     {
         if (collision.collider.CompareTag("Ground"))
         {
-            isGrounded = false;
+            isGrounded = false; // ตัวละครออกจากพื้น
+            animator.SetBool("IsJumping", true); // เล่นอนิเมชันการกระโดดขณะออกจากพื้น
         }
     }
 
